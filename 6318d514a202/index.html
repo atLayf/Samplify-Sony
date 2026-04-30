@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sony Europe Software Consolidation Opportunity Map</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FDF8F6;color:#2D2D2D}
+.page{max-width:1600px;margin:0 auto;padding:24px}
+header{display:flex;align-items:center;gap:20px;padding-left:16px;margin-bottom:8px;justify-content:space-between;flex-wrap:wrap}
+header h1{font-size:30px;font-weight:700;color:#1A2F45}
+header h1 span{color:#5E9F93;font-weight:400;font-size:15px;display:block;margin-top:4px}
+.intro{padding:0 16px 18px 16px;font-size:14px;color:#4b5563;line-height:1.55;max-width:1100px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:20px}
+.kpi{background:#fff;border-radius:12px;padding:18px 22px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.kpi .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#6b7280;margin-bottom:6px}
+.kpi .value{font-size:30px;font-weight:700;line-height:1}
+.kpi.total .value{color:#1A2F45}
+.kpi.cons .value{color:#F16B5B}
+.kpi.keep .value{color:#75C4AE}
+.kpi.rate .value{color:#F2C94C}
+.kpi .sub{font-size:12px;color:#6b7280;margin-top:6px}
+.tm-card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.08);margin-bottom:20px}
+.tm-card h2{font-size:17px;font-weight:600;color:#1A2F45;margin-bottom:6px}
+.tm-card .hint{font-size:12px;color:#9ca3af;margin-bottom:16px}
+.tm-wrap{position:relative;height:760px}
+canvas{cursor:default}
+.tm-tooltip{display:none;position:absolute;background:rgba(26,47,69,0.96);color:#fff;padding:12px 16px;border-radius:8px;font-size:13px;pointer-events:none;z-index:10;max-width:320px;line-height:1.55;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+.tm-tooltip strong{font-size:14px;display:block;margin-bottom:6px;color:#FDF8F6}
+.tm-tooltip .row{display:flex;justify-content:space-between;gap:12px}
+.tm-tooltip .row span:first-child{color:#9ca3af}
+.tm-tooltip .rate-bar{margin-top:6px;height:6px;border-radius:3px;background:#374151;overflow:hidden}
+.tm-tooltip .rate-bar div{height:100%;background:linear-gradient(90deg,#75C4AE,#F2C94C,#F16B5B)}
+.legend{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap}
+.legend-label{font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px}
+.legend-bar{flex:0 1 360px;height:14px;border-radius:7px;background:linear-gradient(90deg,#75C4AE 0%,#F2C94C 50%,#F16B5B 100%);position:relative}
+.legend-tick{font-size:11px;color:#6b7280}
+.legend-end{display:flex;justify-content:space-between;font-size:11px;color:#6b7280;margin-top:4px}
+footer{text-align:center;color:#9ca3af;font-size:12px;padding:18px 0}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+<div>
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNzggNDQiIHdpZHRoPSIyMDgiIGhlaWdodD0iMjgiPgogIDx0ZXh0IHg9IjEyIiB5PSIzMiIgZm9udC1mYW1pbHk9IkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iIzJEMkQyRCI+U09OWSBFVVJPUEU8L3RleHQ+Cjwvc3ZnPg==" alt="Sony Europe" style="height:30px;opacity:0.85">
+<h1>Software Consolidation Opportunity Map<span>Sony Europe &mdash; hover any category for tool counts and consolidation share</span></h1>
+</div>
+<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgNjAiIHdpZHRoPSIyMjUiIGhlaWdodD0iNDUiPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFBMkY0NSIgc3Ryb2tlLXdpZHRoPSI0LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cG9seWxpbmUgcG9pbnRzPSI4LDM2IDIyLDI4IDM2LDM2Ii8+CiAgICA8cG9seWxpbmUgcG9pbnRzPSI4LDI4IDIyLDIwIDM2LDI4Ii8+CiAgICA8cG9seWxpbmUgcG9pbnRzPSI4LDQ0IDIyLDM2IDM2LDQ0Ii8+CiAgICA8cG9seWxpbmUgcG9pbnRzPSI4LDIwIDIyLDEyIDM2LDIwIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjQ2IiB5PSI0MiIgZm9udC1mYW1pbHk9IidTZWdvZSBVSScsQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWYiIGZpbGw9IiMxQTJGNDUiPgogICAgPHRzcGFuIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIwLjUiPlNhbTwvdHNwYW4+PHRzcGFuIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSIzMDAiIGxldHRlci1zcGFjaW5nPSIwLjUiPnBsaWZ5PC90c3Bhbj4KICA8L3RleHQ+Cjwvc3ZnPg==" alt="Samplify" style="height:38px">
+</header>
+<div class="intro">Each rectangle is a software category in Sony Europe's estate. Bigger rectangles contain more tools. The teal &rarr; salmon gradient shows the consolidation rate &mdash; salmon rectangles are categories where most tools are flagged for retirement. Hover any rectangle to see the breakdown.</div>
+<section class="kpis">
+<div class="kpi total"><div class="label">Tools in scope</div><div class="value">2,681</div><div class="sub">across 176 categories</div></div>
+<div class="kpi cons"><div class="label">To Consolidate</div><div class="value">1,794</div><div class="sub">67% of classified tools</div></div>
+<div class="kpi keep"><div class="label">To Keep</div><div class="value">887</div><div class="sub">strategic and essential</div></div>
+<div class="kpi rate"><div class="label">Consolidation Rate</div><div class="value">67%</div><div class="sub">overall reduction opportunity</div></div>
+</section>
+<div class="tm-card">
+<h2>Category Treemap</h2>
+<div class="hint">Rectangle size = number of tools in the category. Colour = consolidation rate (the share of tools flagged for retirement).</div>
+<div class="tm-wrap"><canvas id="treemap"></canvas><div class="tm-tooltip" id="tt"></div></div>
+<div class="legend">
+<span class="legend-label">Consolidation rate:</span>
+<div style="flex:0 1 360px">
+<div class="legend-bar"></div>
+<div class="legend-end"><span>0% (mostly keep)</span><span>50%</span><span>100% (mostly consolidate)</span></div>
+</div>
+</div>
+</div>
+<footer>Sony Europe Software Consolidation Opportunity Map &mdash; Powered by Samplify &mdash; 2,681 tools across 176 categories</footer>
+</div>
+<script>
+const ITEMS=[{"name":"Integrated Development Environment (IDE) Software","total":229,"keep":76,"cons":153,"rate":67},{"name":"File Analysis Software","total":140,"keep":46,"cons":94,"rate":67},{"name":"Computer-Aided Design (CAD) Software","total":132,"keep":52,"cons":80,"rate":61},{"name":"Photo Management Software","total":120,"keep":26,"cons":94,"rate":78},{"name":"Remote Desktop Software","total":110,"keep":24,"cons":86,"rate":78},{"name":"Video Editing Software","total":103,"keep":20,"cons":83,"rate":81},{"name":"Application Platforms","total":82,"keep":35,"cons":47,"rate":57},{"name":"Document Management","total":67,"keep":12,"cons":55,"rate":82},{"name":"Network Management Tools","total":62,"keep":26,"cons":36,"rate":58},{"name":"Hardware Asset Management Tools","total":59,"keep":21,"cons":38,"rate":64},{"name":"File and Object Storage Platforms","total":52,"keep":14,"cons":38,"rate":73},{"name":"Managed Print Services in the Distributed Workplace","total":41,"keep":4,"cons":37,"rate":90},{"name":"Interactive Demonstration Applications","total":39,"keep":7,"cons":32,"rate":82},{"name":"Unified Endpoint Management Tools","total":39,"keep":17,"cons":22,"rate":56},{"name":"Enterprise Backup and Recovery Software Solutions","total":37,"keep":11,"cons":26,"rate":70},{"name":"Game Engine Software","total":35,"keep":19,"cons":16,"rate":46},{"name":"Owned Media Software","total":33,"keep":15,"cons":18,"rate":55},{"name":"Cloud Database Management Systems","total":32,"keep":11,"cons":21,"rate":66},{"name":"Driver Monitoring System (DMS)","total":31,"keep":13,"cons":18,"rate":58},{"name":"Infrastructure Monitoring Tools","total":31,"keep":11,"cons":20,"rate":65},{"name":"Video Platform Services","total":29,"keep":6,"cons":23,"rate":79},{"name":"Software Asset Management Tools","total":29,"keep":13,"cons":16,"rate":55},{"name":"Enterprise Browser","total":28,"keep":6,"cons":22,"rate":79},{"name":"Server Virtualization","total":27,"keep":11,"cons":16,"rate":59},{"name":"Public Key Infrastructure (PKI) and Certificate Lifecycle Management","total":27,"keep":8,"cons":19,"rate":70},{"name":"Visual Collaboration Applications","total":27,"keep":4,"cons":23,"rate":85},{"name":"3D Printing Workflow Software","total":26,"keep":5,"cons":21,"rate":81},{"name":"Design Collaboration Tools","total":26,"keep":9,"cons":17,"rate":65},{"name":"Cloud Development Environments","total":26,"keep":13,"cons":13,"rate":50},{"name":"Analytics and Business Intelligence Platforms","total":24,"keep":10,"cons":14,"rate":58},{"name":"Content Collaboration Tools","total":24,"keep":5,"cons":19,"rate":79},{"name":"Meeting Solutions","total":24,"keep":6,"cons":18,"rate":75},{"name":"Zero Trust Network Access","total":23,"keep":9,"cons":14,"rate":61},{"name":"Prototyping Software","total":22,"keep":7,"cons":15,"rate":68},{"name":"Data Preparation Tools","total":21,"keep":8,"cons":13,"rate":62},{"name":"Label and Artwork Management Software Applications","total":21,"keep":5,"cons":16,"rate":76},{"name":"SCADA Software","total":19,"keep":9,"cons":10,"rate":53},{"name":"Endpoint Protection Platforms","total":19,"keep":6,"cons":13,"rate":68},{"name":"Embedded Operating Systems","total":18,"keep":5,"cons":13,"rate":72},{"name":"Integrated Systems","total":18,"keep":6,"cons":12,"rate":67},{"name":"Data Integration Tools","total":18,"keep":4,"cons":14,"rate":78},{"name":"Microsoft Product Support Services","total":18,"keep":9,"cons":9,"rate":50},{"name":"Unified Communications","total":17,"keep":2,"cons":15,"rate":88},{"name":"Mobile Data Protection Solutions","total":16,"keep":5,"cons":11,"rate":69},{"name":"Data Science and Machine Learning Platforms","total":15,"keep":5,"cons":10,"rate":67},{"name":"Application Development Life Cycle Management","total":15,"keep":6,"cons":9,"rate":60},{"name":"User Authentication","total":14,"keep":6,"cons":8,"rate":57},{"name":"Digital Rights Management Software","total":14,"keep":3,"cons":11,"rate":79},{"name":"Electronic Signature","total":14,"keep":2,"cons":12,"rate":86},{"name":"DevOps Platforms","total":14,"keep":6,"cons":8,"rate":57},{"name":"Barcode Software","total":13,"keep":3,"cons":10,"rate":77},{"name":"Access Management","total":12,"keep":3,"cons":9,"rate":75},{"name":"Password Management Tools","total":11,"keep":3,"cons":8,"rate":73},{"name":"Enterprise Wired and Wireless LAN Infrastructure","total":11,"keep":3,"cons":8,"rate":73},{"name":"Data Security Platforms","total":10,"keep":2,"cons":8,"rate":80},{"name":"Message Testing Tools","total":10,"keep":4,"cons":6,"rate":60},{"name":"Digital Asset Management","total":10,"keep":5,"cons":5,"rate":50},{"name":"Video Surveillance Management Systems","total":10,"keep":4,"cons":6,"rate":60},{"name":"Application Integration Platforms","total":10,"keep":4,"cons":6,"rate":60},{"name":"Online Proofing Software","total":10,"keep":5,"cons":5,"rate":50},{"name":"Enterprise Search Engine","total":10,"keep":3,"cons":7,"rate":70},{"name":"Knowledge Management (KM) Software","total":10,"keep":4,"cons":6,"rate":60},{"name":"Robotic Process Automation","total":9,"keep":4,"cons":5,"rate":56},{"name":"AI-Augmented Software-Testing Tools","total":8,"keep":6,"cons":2,"rate":25},{"name":"Virtual Reality Development Software","total":8,"keep":3,"cons":5,"rate":62},{"name":"Speech-to-Text Solutions","total":8,"keep":5,"cons":3,"rate":38},{"name":"Simulation Platforms for Autonomous Vehicles","total":8,"keep":3,"cons":5,"rate":62},{"name":"Desktop as a Service","total":7,"keep":4,"cons":3,"rate":43},{"name":"Mobile Development Frameworks","total":7,"keep":2,"cons":5,"rate":71},{"name":"Mobile Application Management","total":7,"keep":3,"cons":4,"rate":57},{"name":"Augmented Reality Development Software","total":7,"keep":0,"cons":7,"rate":100},{"name":"AI-Enabled Translation Services","total":7,"keep":1,"cons":6,"rate":86},{"name":"Multiexperience Development Platforms","total":7,"keep":1,"cons":6,"rate":86},{"name":"Project and Portfolio Management","total":7,"keep":1,"cons":6,"rate":86},{"name":"Cloud Management Tooling","total":7,"keep":4,"cons":3,"rate":43},{"name":"Geospatial Information Systems for Energy and Utilities","total":7,"keep":3,"cons":4,"rate":57},{"name":"DNS, DHCP and IP Address Management (DDI)","total":6,"keep":4,"cons":2,"rate":33},{"name":"Intelligent Document Processing Solutions","total":6,"keep":3,"cons":3,"rate":50},{"name":"Embedded Analytics","total":6,"keep":1,"cons":5,"rate":83},{"name":"Content Services Platforms","total":6,"keep":3,"cons":3,"rate":50},{"name":"Digital Experience Monitoring","total":6,"keep":1,"cons":5,"rate":83},{"name":"Visual Intelligence","total":6,"keep":3,"cons":3,"rate":50},{"name":"Business Process Automation Tools","total":6,"keep":2,"cons":4,"rate":67},{"name":"Independent Third-Party Software Support for Megavendors","total":6,"keep":2,"cons":4,"rate":67},{"name":"Edge AI Solutions","total":6,"keep":0,"cons":6,"rate":100},{"name":"IoT Integration","total":5,"keep":0,"cons":5,"rate":100},{"name":"Environmental, Health and Safety Management Software","total":5,"keep":4,"cons":1,"rate":20},{"name":"Tax Software","total":5,"keep":5,"cons":0,"rate":0},{"name":"In-App Protection","total":5,"keep":0,"cons":5,"rate":100},{"name":"Continuous Configuration Automation Tools","total":5,"keep":4,"cons":1,"rate":20},{"name":"Mobile Back-End Services","total":5,"keep":3,"cons":2,"rate":40},{"name":"Data Center Infrastructure Management Tools","total":5,"keep":2,"cons":3,"rate":60},{"name":"Load Testing Tools","total":5,"keep":3,"cons":2,"rate":40},{"name":"Digital Learning Content Providers","total":5,"keep":4,"cons":1,"rate":20},{"name":"Penetration Testing Tools","total":5,"keep":3,"cons":2,"rate":40},{"name":"Digital Signage","total":5,"keep":2,"cons":3,"rate":60},{"name":"Event Technology Platforms","total":5,"keep":2,"cons":3,"rate":60},{"name":"Materials Informatics Solutions","total":5,"keep":3,"cons":2,"rate":40},{"name":"Container Management","total":5,"keep":1,"cons":4,"rate":80},{"name":"Scheduling Automation Software","total":5,"keep":0,"cons":5,"rate":100},{"name":"Application Security Testing","total":5,"keep":3,"cons":2,"rate":40},{"name":"Employee Productivity Monitoring Software","total":5,"keep":3,"cons":2,"rate":40},{"name":"Creative Management Platform (CMP)","total":5,"keep":2,"cons":3,"rate":60},{"name":"Mainframe and Legacy Systems Migration and Modernization Tools","total":5,"keep":3,"cons":2,"rate":40},{"name":"Microsoft Office 365 Implementation and Support Services, Worldwide","total":5,"keep":2,"cons":3,"rate":60},{"name":"Enterprise Low-Code Application Platforms","total":5,"keep":1,"cons":4,"rate":80},{"name":"Collaborative Work Management","total":5,"keep":2,"cons":3,"rate":60},{"name":"Energy Management and Optimization Systems","total":4,"keep":3,"cons":1,"rate":25},{"name":"Personalization Engines","total":4,"keep":2,"cons":2,"rate":50},{"name":"Corporate Telephony","total":4,"keep":2,"cons":2,"rate":50},{"name":"Web Content Management","total":4,"keep":0,"cons":4,"rate":100},{"name":"Email Security","total":4,"keep":1,"cons":3,"rate":75},{"name":"Mobile Application Testing Services","total":4,"keep":2,"cons":2,"rate":50},{"name":"Channel Integration Software","total":4,"keep":0,"cons":4,"rate":100},{"name":"Application Composition Platform","total":4,"keep":1,"cons":3,"rate":75},{"name":"Predictive Analytics Software","total":4,"keep":0,"cons":4,"rate":100},{"name":"Primary Storage Platforms","total":4,"keep":2,"cons":2,"rate":50},{"name":"Identity Verification","total":4,"keep":1,"cons":3,"rate":75},{"name":"Cloud Application Platforms","total":3,"keep":2,"cons":1,"rate":33},{"name":"Marketplace Operation Applications","total":3,"keep":1,"cons":2,"rate":67},{"name":"Network Video Recorders","total":3,"keep":1,"cons":2,"rate":67},{"name":"Trading Platforms","total":3,"keep":2,"cons":1,"rate":33},{"name":"SEO Tools","total":3,"keep":1,"cons":2,"rate":67},{"name":"Cloud Office Migration Tools","total":3,"keep":3,"cons":0,"rate":0},{"name":"Privileged Access Management","total":3,"keep":2,"cons":1,"rate":33},{"name":"E-filing Platforms","total":3,"keep":2,"cons":1,"rate":33},{"name":"Digital Validation Tools for Life Sciences","total":3,"keep":1,"cons":2,"rate":67},{"name":"Application Testing Services, Worldwide","total":3,"keep":2,"cons":1,"rate":33},{"name":"WAN Optimization","total":3,"keep":0,"cons":3,"rate":100},{"name":"Data Loss Prevention","total":3,"keep":2,"cons":1,"rate":33},{"name":"Workstream Collaboration","total":3,"keep":1,"cons":2,"rate":67},{"name":"AI Code Assistants","total":3,"keep":0,"cons":3,"rate":100},{"name":"Product Analytics for Technology and Service Providers","total":3,"keep":0,"cons":3,"rate":100},{"name":"Information-Centric Endpoint and Mobile Protection","total":3,"keep":2,"cons":1,"rate":33},{"name":"B2B Gateway Software","total":3,"keep":1,"cons":2,"rate":67},{"name":"Consumer Video Feedback Software","total":3,"keep":0,"cons":3,"rate":100},{"name":"Supply Chain Simulation Software","total":3,"keep":3,"cons":0,"rate":0},{"name":"Ad Tech Platforms","total":2,"keep":2,"cons":0,"rate":0},{"name":"Dealer Management Systems","total":2,"keep":1,"cons":1,"rate":50},{"name":"Network Automation Platforms","total":2,"keep":1,"cons":1,"rate":50},{"name":"Analytics Query Accelerators","total":2,"keep":1,"cons":1,"rate":50},{"name":"Security Information and Event Management","total":2,"keep":1,"cons":1,"rate":50},{"name":"Integration Platform as a Service","total":2,"keep":1,"cons":1,"rate":50},{"name":"Communications Platform as a Service","total":2,"keep":1,"cons":1,"rate":50},{"name":"Clinical Decision Support Solutions","total":2,"keep":1,"cons":1,"rate":50},{"name":"Email Marketing","total":2,"keep":1,"cons":1,"rate":50},{"name":"In-Memory Data Grids","total":2,"keep":1,"cons":1,"rate":50},{"name":"Indoor Location Application Platforms","total":2,"keep":1,"cons":1,"rate":50},{"name":"Weather Data Solutions for Energy and Utilities","total":2,"keep":2,"cons":0,"rate":0},{"name":"Workplace Experience Applications","total":2,"keep":2,"cons":0,"rate":0},{"name":"Data Center and Cloud Networking","total":2,"keep":1,"cons":1,"rate":50},{"name":"Global WAN Services","total":2,"keep":0,"cons":2,"rate":100},{"name":"Augmented Data Quality Solutions","total":2,"keep":1,"cons":1,"rate":50},{"name":"Digital Accessibility","total":2,"keep":1,"cons":1,"rate":50},{"name":"Meter Data Management Systems","total":2,"keep":0,"cons":2,"rate":100},{"name":"API Management","total":2,"keep":1,"cons":1,"rate":50},{"name":"PLM Software in Discrete Manufacturing Industries","total":2,"keep":1,"cons":1,"rate":50},{"name":"Vulnerability Assessment","total":2,"keep":0,"cons":2,"rate":100},{"name":"Marketing Dashboards","total":2,"keep":0,"cons":2,"rate":100},{"name":"Podcast Hosting Platforms","total":2,"keep":0,"cons":2,"rate":100},{"name":"Asset Performance Management Software","total":2,"keep":1,"cons":1,"rate":50},{"name":"Benchmarking Services for Transportation Rates and Logistics Performance","total":2,"keep":0,"cons":2,"rate":100},{"name":"Digital Experience Platforms","total":2,"keep":1,"cons":1,"rate":50},{"name":"Employee Communications Applications","total":2,"keep":1,"cons":1,"rate":50},{"name":"Distributed Hybrid Infrastructure","total":2,"keep":1,"cons":1,"rate":50},{"name":"Enterprise Conversational AI Platforms","total":2,"keep":1,"cons":1,"rate":50},{"name":"IT Asset Disposition","total":2,"keep":1,"cons":1,"rate":50},{"name":"Event Brokers","total":2,"keep":2,"cons":0,"rate":0},{"name":"Generative AI Apps","total":2,"keep":0,"cons":2,"rate":100},{"name":"Earth Intelligence","total":2,"keep":0,"cons":2,"rate":100},{"name":"Digital Forensics and Incident Response Retainer Services","total":2,"keep":0,"cons":2,"rate":100},{"name":"Intelligent Asset Management (IAM) Software","total":2,"keep":1,"cons":1,"rate":50},{"name":"IT Service Management Platforms","total":2,"keep":1,"cons":1,"rate":50},{"name":"Network Access Control","total":2,"keep":0,"cons":2,"rate":100},{"name":"Security Orchestration, Automation and Response Solutions","total":2,"keep":1,"cons":1,"rate":50},{"name":"Accounts Payable Invoice Automation Solutions","total":2,"keep":2,"cons":0,"rate":0}];
+function interpColor(t){
+  // 0 -> teal #75C4AE (117,196,174); 0.5 -> gold #F2C94C (242,201,76); 1 -> salmon #F16B5B (241,107,91)
+  if(t<0.5){const k=t/0.5;return'rgb('+Math.round(117+(242-117)*k)+','+Math.round(196+(201-196)*k)+','+Math.round(174+(76-174)*k)+')'}
+  const k=(t-0.5)/0.5;return'rgb('+Math.round(242+(241-242)*k)+','+Math.round(201+(107-201)*k)+','+Math.round(76+(91-76)*k)+')'
+}
+function renderTreemap(){
+  const canvas=document.getElementById('treemap');
+  const tooltip=document.getElementById('tt');
+  const wrap=canvas.parentElement;
+  const rect=wrap.getBoundingClientRect();
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;
+  canvas.style.width=rect.width+'px';canvas.style.height=rect.height+'px';
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  const W=rect.width,H=rect.height;
+  const items=ITEMS.map(i=>({...i}));
+  if(!items.length){ctx.fillStyle='#9ca3af';ctx.font='14px sans-serif';ctx.fillText('No data',W/2-30,H/2);return}
+
+  function layout(items,x,y,w,h){
+    if(!items.length)return[];
+    if(items.length===1){items[0]._x=x;items[0]._y=y;items[0]._w=w;items[0]._h=h;return items}
+    const rects=[];let remaining=[...items];let cx=x,cy=y,cw=w,ch=h;
+    while(remaining.length>0){
+      const remTotal=remaining.reduce((s,i)=>s+i.total,0);
+      const isWide=cw>=ch;const side=isWide?ch:cw;
+      let row=[remaining[0]];let rowSum=remaining[0].total;
+      for(let i=1;i<remaining.length;i++){
+        const testSum=rowSum+remaining[i].total;
+        const testRow=[...row,remaining[i]];
+        const rowFrac=testSum/remTotal;
+        const rowSize=isWide?cw*rowFrac:ch*rowFrac;
+        let worstAspect=0;
+        testRow.forEach(item=>{
+          const itemFrac=item.total/testSum;
+          const itemSize=side*itemFrac;
+          const aspect=Math.max(rowSize/itemSize,itemSize/rowSize);
+          worstAspect=Math.max(worstAspect,aspect);
+        });
+        const prevFrac=rowSum/remTotal;const prevSize=isWide?cw*prevFrac:ch*prevFrac;
+        let prevWorst=0;row.forEach(item=>{const f=item.total/rowSum;const s=side*f;const a=Math.max(prevSize/s,s/prevSize);prevWorst=Math.max(prevWorst,a)});
+        if(worstAspect>prevWorst&&row.length>0)break;
+        row.push(remaining[i]);rowSum=testSum;
+      }
+      const rowFrac=rowSum/remTotal;const rowSize=isWide?cw*rowFrac:ch*rowFrac;
+      let offset=isWide?cy:cx;
+      row.forEach(item=>{
+        const itemFrac=item.total/rowSum;const itemSize=side*itemFrac;
+        if(isWide){item._x=cx;item._y=offset;item._w=rowSize;item._h=itemSize;offset+=itemSize}
+        else{item._x=offset;item._y=cy;item._w=itemSize;item._h=rowSize;offset+=itemSize}
+        rects.push(item);
+      });
+      remaining=remaining.slice(row.length);
+      if(isWide){cx+=rowSize;cw-=rowSize}else{cy+=rowSize;ch-=rowSize}
+    }
+    return rects;
+  }
+  const rects=layout(items,2,2,W-4,H-4);
+  ctx.clearRect(0,0,W,H);
+  rects.forEach(item=>{
+    const t=item.rate/100;
+    ctx.fillStyle=interpColor(t);
+    ctx.fillRect(item._x+1,item._y+1,item._w-2,item._h-2);
+    ctx.strokeStyle='#FDF8F6';ctx.lineWidth=2;
+    ctx.strokeRect(item._x+1,item._y+1,item._w-2,item._h-2);
+    // Label visibility threshold
+    if(item._w>60&&item._h>26){
+      const fontSize=Math.max(9,Math.min(12,item._w/13));
+      const textColor=t>0.55?'#fff':'#1A2F45';
+      ctx.fillStyle=textColor;
+      ctx.font='600 '+fontSize+'px -apple-system,sans-serif';
+      const maxChars=Math.floor(item._w/(fontSize*0.55));
+      const label=item.name.length>maxChars?item.name.substring(0,Math.max(3,maxChars-1))+'…':item.name;
+      ctx.fillText(label,item._x+5,item._y+fontSize+3);
+      if(item._h>40){
+        ctx.font=(fontSize-1)+'px -apple-system,sans-serif';
+        ctx.fillText(item.total+' tools · '+item.rate+'% consolidate',item._x+5,item._y+fontSize*2+5);
+      }
+    }
+  });
+  canvas.onmousemove=function(e){
+    const br=canvas.getBoundingClientRect();
+    const mx=e.clientX-br.left,my=e.clientY-br.top;
+    const hit=rects.find(r=>mx>=r._x&&mx<=r._x+r._w&&my>=r._y&&my<=r._y+r._h);
+    if(hit){
+      tooltip.style.display='block';
+      tooltip.innerHTML='<strong>'+hit.name+'</strong>'+
+        '<div class="row"><span>Total tools</span><span>'+hit.total+'</span></div>'+
+        '<div class="row"><span>To keep</span><span>'+hit.keep+'</span></div>'+
+        '<div class="row"><span>To consolidate</span><span>'+hit.cons+'</span></div>'+
+        '<div class="row"><span>Consolidation rate</span><span><strong>'+hit.rate+'%</strong></span></div>'+
+        '<div class="rate-bar"><div style="width:'+hit.rate+'%"></div></div>';
+      const tw=320;
+      tooltip.style.left=Math.min(mx+14,W-tw-10)+'px';
+      tooltip.style.top=Math.min(my+14,H-160)+'px';
+      canvas.style.cursor='pointer';
+    } else {
+      tooltip.style.display='none';
+      canvas.style.cursor='default';
+    }
+  };
+  canvas.onmouseleave=function(){tooltip.style.display='none'};
+}
+window.addEventListener('resize',()=>renderTreemap());
+renderTreemap();
+</script>
+</body>
+</html>
